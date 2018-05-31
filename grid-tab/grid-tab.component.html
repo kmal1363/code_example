@@ -1,0 +1,36 @@
+<lxft-loader *ngIf="isLoading"></lxft-loader>
+
+<div class="grid-tab-content">
+    <div class="table-nav" *ngIf="isShowNav">
+        <div class="col-sm-8">
+            <ng-content *ngTemplateOutlet="navRight"></ng-content>
+        </div>
+        <div [ngClass]="{'error-report-header': isSmallWindowWithGrid, 'col-sm-4': !isSmallWindowWithGrid}">
+            <lxft-grid-toolbar [pageOptions]="paginationOptions"
+                               [isLoading]="isLoading"
+                               (setPageNumber)="setPageNumber($event)"
+                               (setPageSize)="setPageSize($event)"></lxft-grid-toolbar>
+        </div>
+    </div>
+
+    <ngx-datatable
+        #gridTable
+        class="material striped"
+        [headerHeight]="29"
+        [footerHeight]="0"
+        [rowHeight]="36"
+        [rows]="rows"
+        [columns]="columns"
+        [columnMode]="'force'"
+        [reorderable]="true"
+        [externalPaging]="true"
+        [externalSorting]="true"
+        [scrollbarH]="true"
+        [maxHeightCols]="maxCols"
+        [count]="paginationOptions.rowsOnPage"
+        [offset]="paginationOptions.pageNumber"
+        [limit]="paginationOptions.size"
+        [sorts]="sorts"
+        (sort)="setSort($event)">
+    </ngx-datatable>
+</div>
