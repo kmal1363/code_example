@@ -1,11 +1,11 @@
 import { Component, ViewChild, Input, OnInit, ContentChild, TemplateRef } from '@angular/core';
 import { sortRows } from '../../custom-node-modules/ngx-datatable/utils';
 
-import { Column } from '../../grid/models/column';
-import { Page } from '../../grid/models/page';
+import { Column } from './models/column';
+import { Page } from './models/page';
 
 @Component({
-    selector: 'lxft-grid-tab',
+    selector: 'grid-tab',
     templateUrl: './grid-tab.component.html'
 })
 export class GridTabComponent implements OnInit {
