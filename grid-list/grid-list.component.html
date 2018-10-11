@@ -1,0 +1,57 @@
+<lxft-loader *ngIf="isLoadingFirst"></lxft-loader>
+<section class="filters" *ngIf="isShowFilters">
+    <lxft-filters-panel
+        [gridName]="paginationOptions.gridName"
+        (onApply)="setFilters($event)"
+        (onReset)="setFilters()">
+    </lxft-filters-panel>
+</section>
+
+<div class="content" *ngIf="!isLoadingFirst">
+    <div class="table-nav">
+        <lxft-grid-count-results [pageOptions]="paginationOptions" class="items-count"></lxft-grid-count-results>
+        <div class="f-right">
+            <lxft-grid-toolbar [pageOptions]="paginationOptions"
+                               [isLoading]="isLoading"
+                               class="f-left"
+                               (setPageNumber)="setPageNumber($event)"
+                               (setPageSize)="setPageSize($event)"></lxft-grid-toolbar>
+
+            <lxft-grid-toggle-columns *ngIf="isShowToggleColumns"
+                                      [gridName]="paginationOptions.gridName"
+                                      class="columns-customize"
+                                      [(columns)]="columns"></lxft-grid-toggle-columns>
+        </div>
+    </div>
+    <div class="table-buttons">
+        <ng-template [ngTemplateOutlet]="buttonsToolbar"
+                     [ngTemplateOutletContext]="{onLoaderChange: onLoaderChange, selectedRows: selectedRows, getPageParams: getPageParams.bind(this)}">
+        </ng-template>
+    </div>
+
+    <ngx-datatable
+        #gridTable
+        class="material striped"
+        [headerHeight]="29"
+        [footerHeight]="0"
+        [rowHeight]="rowHeight"
+        [rows]="rows"
+        [columns]="columns"
+        [columnMode]="'force'"
+        [reorderable]="true"
+        [externalPaging]="true"
+        [externalSorting]="true"
+        [scrollbarH]="true"
+        [selected]="selectedRows"
+        [selectionType]="'checkbox'"
+        [selectAllRowsOnPage]="false"
+        [count]="paginationOptions.rowsOnPage"
+        [offset]="paginationOptions.pageNumber"
+        [limit]="paginationOptions.size"
+        [sorts]="defSortGrid"
+        (sort)="setSort($event)">
+    </ngx-datatable>
+
+    <ng-content></ng-content>
+</div>
+

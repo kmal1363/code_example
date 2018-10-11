@@ -1,0 +1,39 @@
+<form [ngClass]="{'hide-filters' : isCollapsed}">
+    <div class="filters-btn-set">
+        <h4 class="title" (click)="toggleCollapsed()">
+            <span class="title-arrow halflings halflings-menu-up"></span>
+            Filters
+        </h4>
+        <div class="form-inline">
+            <span class="loader-circle" *ngIf="isLoading"></span>
+            <button type="submit"
+                    id="filter-search"
+                    class="btn btn-primary"
+                    [disabled]="isSubmitDisabled()"
+                    (click)="applyFilters()">Search</button>
+
+            <button type="button"
+                    id="filter-reset"
+                    class="btn btn-default"
+                    [disabled]="isResetDisabled()"
+                    (click)="resetFilters()">Reset</button>
+        </div>
+    </div>
+    <div class="filters-area">
+        <div class="filters-item" *ngFor="let filter of filters"
+            [ngClass]="{'hide-select-arrow': filter.search, 'filter-error': filter.isInvalid}">
+            <label class="control-label a-left">{{filter.title}}</label>
+            <button class="filters-reset-btn btn-link"
+                    [ngClass]="{hidden: isClearItemDisabled(filter)}"
+                    (click)="clearFilterItem(filter)">
+                Clear <span class="glyphicons glyphicons-remove"></span>
+            </button>
+
+            <lxft-filter-select *ngIf="filter.type===filtersTypes.select"
+                                [filter]="filter"></lxft-filter-select>
+
+            <lxft-filter-date *ngIf="filter.type===filtersTypes.date"
+                              [filter]="filter"></lxft-filter-date>
+        </div>
+    </div>
+</form>
